@@ -52,9 +52,10 @@ export class ProductService {
 						thePageSize: number,
 						theCategoryId: number): Observable<GetResponseProducts> {
 		//build URL based on category id, page and size
-		const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`
+		const searchUrl = `${this.baseUrl}/?`
 						+ `page=${thePage}&size=${thePageSize}`;
 		return this.httpClient.get<GetResponseProducts>(searchUrl);
+
 	}
 
 }
