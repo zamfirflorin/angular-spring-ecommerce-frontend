@@ -1,7 +1,21 @@
 
 
-<div *ngFor="let tempEmployee of employees">
+<div class="page-wrapper">
 
-    {{tempEmployee.firstName}}
-
+<table class="table table-hover">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">#</th>
+        <th>Name</th>
+        <th>Last Name</th>
+    </tr>
+</thead>
+<tbody>
+        <tr *ngFor="let tempEmployee of employees">
+            <th scope="row">{{tempEmployee.id }}</th>
+            <td>{{  tempEmployee.firstName }}</td>
+            <td>{{  tempEmployee.lastName }}</td>
+        </tr>
+</tbody>
+</table>
 </div>

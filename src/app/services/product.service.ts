@@ -32,9 +32,19 @@ export class ProductService {
 	}
 
 	searchProducts(theKeyword: string): Observable<Product[]> {
-
 		const searchProduct: string = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`;
 		return this.getProducts(searchProduct);
+	}
+
+
+	searchProductPaginate(thePage: number,
+					   thePageSize: number,
+						theKeyword: number): Observable<GetResponseProducts> {
+		//build URL based on category id, page and size
+		const searchUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`
+			+ `page=${thePage}&size=${thePageSize}`;
+		return this.httpClient.get<GetResponseProducts>(searchUrl);
+
 	}
 
 	private getProducts(searchProduct: string): Observable<Product[]> {
@@ -44,16 +54,16 @@ export class ProductService {
 	}
 
 	getProduct(theProductId: number): Observable<Product> {
-		const productUrl:string = `${this.baseUrl}/${theProductId}`;
+		const productUrl: string = `${this.baseUrl}/${theProductId}`;
 		return this.httpClient.get<Product>(productUrl);
 	}
 
 	getProductListPaginate(thePage: number,
-						thePageSize: number,
-						theCategoryId: number): Observable<GetResponseProducts> {
+		thePageSize: number,
+		theCategoryId: number): Observable<GetResponseProducts> {
 		//build URL based on category id, page and size
 		const searchUrl = `${this.baseUrl}/?`
-						+ `page=${thePage}&size=${thePageSize}`;
+			+ `page=${thePage}&size=${thePageSize}`;
 		return this.httpClient.get<GetResponseProducts>(searchUrl);
 
 	}
@@ -64,11 +74,11 @@ interface GetResponseProducts {
 	_embedded: {
 		products: Product[];
 	},
-  page: {
-    size: number,
-    totalElements: number,
-    totalPages: number,
-    number: number
+	page: {
+		size: number,
+		totalElements: number,
+		totalPages: number,
+		number: number
 	}
 }
 
