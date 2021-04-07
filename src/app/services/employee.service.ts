@@ -9,19 +9,23 @@ import { Employee } from '../common/employee';
 })
 export class EmployeeService {
 
+
   private baseUrl = 'http://localhost:8082/api/employees';
 
 
   constructor(private httpClient: HttpClient) { }
 
-  getProductList(): Observable<Employee[]>{
+  getEmployeeList(): Observable<Employee[]> {
     return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
       map(response => response._embedded.employees)
     );
   }
+
+  deleteEmployee(id) {
+    return this.httpClient.delete(`${this.baseUrl}/${id}`);
+  }
+
 }
-
-
 interface GetResponse {
   _embedded: {
     employees: Employee[];

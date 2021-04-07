@@ -11,7 +11,7 @@ export class EmployeeListComponent implements OnInit {
 
 
   employees: Employee[];
-
+  message: string;
   constructor(private employeeService: EmployeeService) { }
 
   ngOnInit(): void {
@@ -19,11 +19,23 @@ export class EmployeeListComponent implements OnInit {
   }
 
   listEmployees() {
-    this.employeeService.getProductList().subscribe(
+    this.employeeService.getEmployeeList().subscribe(
       data =>{
         this.employees = data;
       }
     )
   }
+
+  deleteEmployee(id) {
+    console.log(`delete todo ${id}` )
+    this.employeeService.deleteEmployee(id).subscribe (
+      response => {
+        console.log(response);
+        this.message = `Delete of Employee ${id} Successful!`;
+        this.listEmployees();
+      }
+    )
+  }
+
 
 }

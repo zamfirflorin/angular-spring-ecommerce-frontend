@@ -8,6 +8,7 @@
         <th scope="col">#</th>
         <th>Name</th>
         <th>Last Name</th>
+        <th>Delete</th>
     </tr>
 </thead>
 <tbody>
@@ -15,6 +16,7 @@
             <th scope="row">{{tempEmployee.id }}</th>
             <td>{{  tempEmployee.firstName }}</td>
             <td>{{  tempEmployee.lastName }}</td>
+            <td><button (click)="deleteEmployee(tempEmployee.id)" class="btn btn-warning">Delete</button></td>
         </tr>
 </tbody>
 </table>
