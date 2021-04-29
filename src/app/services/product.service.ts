@@ -39,7 +39,7 @@ export class ProductService {
 
 	searchProductPaginate(thePage: number,
 					   thePageSize: number,
-						theKeyword: number): Observable<GetResponseProducts> {
+						theKeyword: string): Observable<GetResponseProducts> {
 		//build URL based on category id, page and size
 		const searchUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`
 			+ `page=${thePage}&size=${thePageSize}`;
