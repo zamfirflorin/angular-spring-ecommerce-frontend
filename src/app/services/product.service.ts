@@ -47,7 +47,7 @@ export class ProductService {
   searchProducts(theKeyword: string): Observable<Product[]> {
 
     // need to build URL based on the keyword 
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`;
+    const searchUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`;
 
     return this.getProducts(searchUrl);
   }
@@ -57,7 +57,7 @@ export class ProductService {
                         theKeyword: string): Observable<GetResponseProducts> {
 
     // need to build URL based on keyword, page and size 
-    const searchUrl = `${this.baseUrl}/search/findByNameContaining?name=${theKeyword}`
+    const searchUrl = `${this.baseUrl}/search/findByNameContainingIgnoreCase?name=${theKeyword}`
                     + `&page=${thePage}&size=${thePageSize}`;
     
     return this.httpClient.get<GetResponseProducts>(searchUrl);
