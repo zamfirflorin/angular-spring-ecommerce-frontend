@@ -34,54 +34,74 @@ export class ProductListComponent implements OnInit {
 
         listProducts() {
 
-                //check to see if this route has a parameter for this keyword because if it does have a keyword for the parameter this means we are performing a search
                 this.searchMode = this.route.snapshot.paramMap.has('keyword');
-
+            
                 if (this.searchMode) {
-                        this.handleSearchProducts();
-                } else {
-                        this.handleListProducts();
+                  this.handleSearchProducts();
                 }
-        }
+                else {
+                  this.handleListProducts();
+                }
+            
+              }
 
+              handleSearchProducts() {
 
-        handleSearchProducts() {
                 const theKeyword: string = this.route.snapshot.paramMap.get('keyword');
-
-                //search for products using a keyword
+            
+                // if we have a different keyword than previous
+                // then set thePageNumber to 1
+            
                 if (this.previousKeyword != theKeyword) {
-                        this.thePageNumber = 1;
+                  this.thePageNumber = 1;
                 }
-
+            
                 this.previousKeyword = theKeyword;
+            
                 console.log(`keyword=${theKeyword}, thePageNumber=${this.thePageNumber}`);
+            
+                // now search for the products using keyword
+                this.productService.searchProductsPaginate(this.thePageNumber - 1,
+                                                           this.thePageSize,
+                                                           theKeyword).subscribe(this.processResult());
+                                                           
+              }
 
-                this.productService.searchProductPaginate(this.thePageNumber - 1, this.thePageSize, theKeyword).subscribe(this.processResult());
-        }
+              handleListProducts() {
 
-
-        handleListProducts() {
-
+                // check if "id" parameter is available
                 const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
+            
                 if (hasCategoryId) {
-                        this.currentCategoryId = +this.route.snapshot.paramMap.get('id');
-                } else {
-                        this.currentCategoryId = 1;
+                  // get the "id" param string. convert string to a number using the "+" symbol
+                  this.currentCategoryId = +this.route.snapshot.paramMap.get('id');
                 }
-                //check if we have a different category than previous
-                //Note: Angular will reuse a component if it is currently being viewed
-                //if we have a different category id than previous then we want to reset the page number back to 1
-
+                else {
+                  // not category id available ... default to category id 1
+                  this.currentCategoryId = 1;
+                }
+            
+                //
+                // Check if we have a different category than previous
+                // Note: Angular will reuse a component if it is currently being viewed
+                //
+            
+                // if we have a different category id than previous
+                // then set thePageNumber back to 1
                 if (this.previousCategoryId != this.currentCategoryId) {
-                        this.thePageNumber = 1;
+                  this.thePageNumber = 1;
                 }
+            
                 this.previousCategoryId = this.currentCategoryId;
+            
                 console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
-
+            
+                // now get the products for the given category id
                 this.productService.getProductListPaginate(this.thePageNumber - 1,
-                        this.thePageSize,
-                        this.currentCategoryId).subscribe(this.processResult());
-        }
+                                                           this.thePageSize,
+                                                           this.currentCategoryId)
+                                                           .subscribe(this.processResult());
+              }
         processResult() {
                 return data => {
                         this.products = data._embedded.products;
