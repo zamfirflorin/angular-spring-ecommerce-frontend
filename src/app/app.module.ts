@@ -11,6 +11,7 @@ import { ProductCategoryMenuComponent } from './components/product-category-menu
 import { SearchComponent } from './components/search/search.component';
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { WeatherDetailsComponent } from './components/weather-details/weather-details.component';
 
 const routes: Routes = [
 	{ path: 'products/:id', component: ProductDetailsComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
 	{ path: 'employees', component: EmployeeListComponent},
 	{ path: 'category', component: ProductListComponent },
 	{ path: 'products', component: ProductListComponent },
+	{ path: 'weather', component: WeatherDetailsComponent},
 	{ path: 'search/:keyword', component: ProductListComponent },
 	{ path: '', redirectTo: '/products', pathMatch: 'full' },	
 	{ path: '**', redirectTo: '/products', pathMatch: 'full' }
@@ -30,7 +32,8 @@ const routes: Routes = [
 		EmployeeListComponent,
 		ProductCategoryMenuComponent,
 		SearchComponent,
-		ProductDetailsComponent
+		ProductDetailsComponent,
+		WeatherDetailsComponent
 	],
 	imports: [
 		RouterModule.forRoot(routes),
